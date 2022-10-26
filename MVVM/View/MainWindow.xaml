@@ -1,0 +1,223 @@
+﻿<Window x:Class="TypingCoach.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TypingCoach"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Height="450"
+        Icon="/Images/Logo.png"
+        ResizeMode="CanMinimize"
+        Title="Typing Coach"
+        Width="810">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PaleYellow" Color="#FCFC71"/>
+        <SolidColorBrush x:Key="PaleViolet" Color="#E090E0"/>
+    </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="KeyUp">
+            <i:InvokeCommandAction Command="{Binding KeyReleaseCommand}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="KeyDown">
+            <i:InvokeCommandAction Command="{Binding KeyPressCommand}" PassEventArgsToCommand="True"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False">
+            <DockPanel.Background>
+                <LinearGradientBrush StartPoint="0, 1"
+                                     EndPoint="0.8, 0.1">
+                    <GradientStop Color="DeepSkyBlue" Offset="0.5"/>
+                    <GradientStop Color="GhostWhite" Offset="0.5"/>
+                </LinearGradientBrush>
+            </DockPanel.Background>
+            <Viewbox Width="200">
+                <TextBlock Text="Typing Coach"
+                           FontFamily="/Fonts/#Masque"/>
+            </Viewbox>
+            <Button Background="Transparent"
+                    Command="{Binding SettingsCommand}"
+                    DockPanel.Dock="Right"
+                    Focusable="False"
+                    Margin="0, 0, 10, 0"
+                    Style="{StaticResource ButtonWithPics}"
+                    x:Name="settings">
+                <Button.Content>
+                    <Image Source="/Images/settings.png"/>
+                </Button.Content>
+            </Button>
+            <TextBlock DockPanel.Dock="Right"
+                       Foreground="Gray"
+                       VerticalAlignment="Center"
+                       Margin="0, 0, 15, 0"
+                       Text="{Binding Player}"/>
+        </DockPanel>
+
+        <Canvas Grid.Row="1">
+            <Button Background="{Binding PlayBackground}"
+                    Canvas.Left="384"
+                    Canvas.Top="4"
+                    Command="{Binding PlayCommand}"
+                    Content="{Binding PlayOrStop}"
+                    Focusable="False"
+                    FontSize="20"
+                    FontStyle="Italic"
+                    FontWeight="Bold"
+                    Height="40"
+                    Margin="50, 0, 0, 0"
+                    Style="{StaticResource ButtonStyle}"
+                    Width="150"
+                    x:Name="playButton"/>
+            <Button Background="Orange"
+                    Canvas.Left="384"
+                    Canvas.Top="4"
+                    Command="{Binding ScoreCommand}"
+                    Content="Score"
+                    Focusable="False"
+                    FontSize="20"
+                    FontStyle="Italic"
+                    FontWeight="Bold"
+                    Height="40"
+                    Margin="250, 0, 0, 0"
+                    Style="{StaticResource ButtonStyle}"
+                    Width="150"
+                    x:Name="score"/>
+            <TextBlock Text="Speed chars/min:"
+                       FontSize="15"
+                       FontStyle="Italic"/>
+            <Label Canvas.Left="10"
+                   Canvas.Top="10"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Content="{Binding Speed, StringFormat=N2}"/>
+            <TextBlock Canvas.Left="130"
+                       FontSize="15"
+                       FontStyle="Italic"
+                       Text="Fails:"/>
+            <Label Canvas.Top="10"
+                   Canvas.Left="135"
+                   FontSize="25"
+                   FontWeight="Bold"
+                   Content="{Binding Fails}"/>
+        </Canvas>
+
+        <DockPanel Grid.Row="2">
+            <ProgressBar DockPanel.Dock="Top"
+                         Height="20"
+                         Value="0"
+                         x:Name="proceedingProgressBar">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="ValueChanged">
+                        <i:InvokeCommandAction Command="{Binding ProgressbarValueChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ProgressBar>
+            <TextBox Background="SlateGray"
+                     FontSize="20"
+                     Foreground="GhostWhite"
+                     IsReadOnly="True"
+                     IsEnabled="{Binding IsGameStarted}"
+                     x:Name="textBox"/>
+        </DockPanel>
+        <Grid Grid.Row="3"
+              Background="GhostWhite"
+              x:Name="keyboard">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Margin="0, 5"
+                        Orientation="Horizontal">
+                <Button Background="PaleVioletRed" Content="`" Margin="5, 0" Style="{StaticResource Keys}" Width="60" x:Name="Oem3"/>
+                <Button Background="PaleVioletRed" Content="1" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D1"/>
+                <Button Background="PaleVioletRed" Content="2" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D2"/>
+                <Button Background="{StaticResource PaleYellow}" Content="3" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D3"/>
+                <Button Background="LawnGreen" Content="4" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D4"/>
+                <Button Background="CornflowerBlue" Content="5" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D5"/>
+                <Button Background="CornflowerBlue" Content="6" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D6"/>
+                <Button Background="{StaticResource PaleViolet}" Content="7" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D7"/>
+                <Button Background="{StaticResource PaleViolet}" Content="8" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D8"/>
+                <Button Background="PaleVioletRed" Content="9" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D9"/>
+                <Button Background="{StaticResource PaleYellow}" Content="0" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D0"/>
+                <Button Background="LawnGreen" Content="-" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemMinus"/>
+                <Button Background="LawnGreen" Content="=" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemPlus"/>
+                <Button Content="Backspace" Margin="5, 0" Style="{StaticResource Keys}" Width="120" x:Name="Back"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Margin="0, 5"
+                        Orientation="Horizontal">
+                <Button Content="Tab" Margin="5, 0" Style="{StaticResource Keys}" Width="100" x:Name="Tab"/>
+                <Button Background="PaleVioletRed" Content="q" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="Q"/>
+                <Button Background="{StaticResource PaleYellow}" Content="w" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="W"/>
+                <Button Background="LawnGreen" Content="e" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="E"/>
+                <Button Background="CornflowerBlue" Content="r" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="R"/>
+                <Button Background="CornflowerBlue" Content="t" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="T"/>
+                <Button Background="{StaticResource PaleViolet}" Content="y" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="Y"/>
+                <Button Background="{StaticResource PaleViolet}" Content="u" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="U"/>
+                <Button Background="PaleVioletRed" Content="i" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="I"/>
+                <Button Background="{StaticResource PaleYellow}" Content="o" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="O"/>
+                <Button Background="LawnGreen" Content="p" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="P"/>
+                <Button Background="LawnGreen" Content="[" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemOpenBrackets"/>
+                <Button Background="LawnGreen" Content="]" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="Oem6"/>
+                <Button Background="LawnGreen" Content="\" Margin="5, 0" Style="{StaticResource Keys}" Width="80" x:Name="Oem5"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2"
+                        Margin="0, 5"
+                        Orientation="Horizontal">
+                <Button Content="Caps Lock" Margin="5, 0" Style="{StaticResource Keys}" Width="120" x:Name="Capital"/>
+                <Button Background="PaleVioletRed" Content="a" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="A"/>
+                <Button Background="{StaticResource PaleYellow}" Content="s" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="S"/>
+                <Button Background="LawnGreen" Content="d" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="D"/>
+                <Button Background="CornflowerBlue" Content="f" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="F"/>
+                <Button Background="CornflowerBlue" Content="g" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="G"/>
+                <Button Background="{StaticResource PaleViolet}" Content="h" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="H"/>
+                <Button Background="{StaticResource PaleViolet}" Content="j" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="J"/>
+                <Button Background="PaleVioletRed" Content="k" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="K"/>
+                <Button Background="{StaticResource PaleYellow}" Content="l" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="L"/>
+                <Button Background="LawnGreen" Content=";" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="Oem1"/>
+                <Button Background="LawnGreen" Content="'" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemQuotes"/>
+                <Button Content="Enter" Margin="5, 0" Style="{StaticResource Keys}" Width="110" x:Name="Return"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3"
+                        Margin="0, 5"
+                        Orientation="Horizontal">
+                <Button Content="Shift" Margin="5, 0" Style="{StaticResource Keys}" Width="140" x:Name="LeftShift"/>
+                <Button Background="PaleVioletRed" Content="z" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="Z"/>
+                <Button Background="{StaticResource PaleYellow}" Content="x" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="X"/>
+                <Button Background="LawnGreen" Content="c" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="C"/>
+                <Button Background="CornflowerBlue" Content="v" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="V"/>
+                <Button Background="CornflowerBlue" Content="b" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="B"/>
+                <Button Background="{StaticResource PaleViolet}" Content="n" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="N"/>
+                <Button Background="{StaticResource PaleViolet}" Content="m" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="M"/>
+                <Button Background="PaleVioletRed" Content="," Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemComma"/>
+                <Button Background="{StaticResource PaleYellow}" Content="." Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemPeriod"/>
+                <Button Background="LawnGreen" Content="/" Margin="5, 0" Style="{StaticResource Keys}" Width="40" x:Name="OemQuestion"/>
+                <Button Content="Shift" Margin="5, 0" Style="{StaticResource Keys}" Width="140" x:Name="RightShift"/>
+            </StackPanel>
+            <StackPanel Grid.Row="4"
+                        Margin="0, 5"
+                        Orientation="Horizontal">
+                <Button Content="Ctrl" Margin="5, 0" Style="{StaticResource Keys}" Width="100" x:Name="LeftCtrl"/>
+                <Button Content="Win" Margin="5, 0" Style="{StaticResource Keys}" Width="70" x:Name="LWin"/>
+                <Button Content="Alt" Margin="5, 0" Style="{StaticResource Keys}" Width="70" x:Name="LeftAlt"/>
+                <Button Background="SandyBrown" Content="Space" Margin="5, 0" Style="{StaticResource Keys}" Width="320" x:Name="Space"/>
+                <Button Content="Alt" Margin="5, 0" Style="{StaticResource Keys}" Width="70" x:Name="RightAlt"/>
+                <Button Content="Ctrl" Margin="5, 0" Style="{StaticResource Keys}" Width="110" x:Name="RightCtrl"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

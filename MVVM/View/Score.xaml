@@ -1,0 +1,50 @@
+﻿<Window x:Class="TypingCoach.Score"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TypingCoach"
+        mc:Ignorable="d"
+        Icon="/Images/Logo.png"
+        ResizeMode="CanMinimize"
+        Title="Score" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Top">
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding TopPlayers}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Place}"
+                                            Header="Place"/>
+                        <DataGridTextColumn Binding="{Binding Player}"
+                                            Header="Name"/>
+                        <DataGridTextColumn Binding="{Binding Speed}"
+                                            Header="Speed"/>
+                        <DataGridTextColumn Binding="{Binding Duration, StringFormat=hh\\:mm\\:ss}"
+                                            Header="Duration"/>
+                        <DataGridTextColumn Binding="{Binding Fails}"
+                                            Header="Fails"/>
+                        <DataGridTextColumn Binding="{Binding Complexity}"
+                                            Header="Complexity"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="Player Score">
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding PlayerScore}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding SessionBeginning}"
+                                            Header="Session beginning"/>
+                        <DataGridTextColumn Binding="{Binding Fails}"
+                                            Header="Fails"/>
+                        <DataGridTextColumn Binding="{Binding Speed}"
+                                            Header="Speed"/>
+                        <DataGridTextColumn Binding="{Binding Duration, StringFormat=hh\\:mm\\:ss}"
+                                            Header="Duration"/>
+                        <DataGridTextColumn Binding="{Binding Complexity}"
+                                            Header="Complexity"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
