@@ -28,12 +28,19 @@ namespace TypingCoach.MVVM.ViewModel
         {
             if (obj is Window window)
             {
-                _action?.Invoke(_login?.Text ?? "", _password?.Password ?? "");
-                window.Close();
+                try
+                {
+                    _action?.Invoke(_login?.Text ?? "", _password?.Password ?? "");
+                    window.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Account wasn't been found", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
         private bool CanExecute_OK(object? obj) 
-            => _password?.Password.Count(i => i < 32 && i > 126) == 0 && _password.Password.Length > 6 && _login?.Text.Length >= 4;
+            => _password?.Password.Count(i => i < 32 && i > 126) == 0 && _password.Password.Length > 6 && _login?.Text.Length >= 4 && _login.Text != "Guest";
         public ICommand CloseCommand { get; }
         private void Execute_Close(object? obj)
         {

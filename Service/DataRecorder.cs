@@ -19,16 +19,18 @@ namespace TypingCoach.Service
         public static void WriteResaults(PlayerScoreModel player)
         {
             string path = Directory.GetCurrentDirectory() + "\\Scores.txt";
-            if (!File.Exists(path)) File.Create(path);
+            if (!File.Exists(path)) 
+                File.Create(path).Close();
             File.AppendAllText(path, player.ToString());
         }
 
         public static void ThrowAnExceptionIfAccountHasNotBeenFound(string? login, string? password)
         {
             string path = Directory.GetCurrentDirectory() + "\\Accounts.txt";
-            if (!File.Exists(path)) File.Create(path);
-            if (!File.ReadAllLines(path).Where(i => i == $"{login}-{password}").Any())
-                throw new Exception("There's no such account");
+            if (!File.Exists(path)) 
+                File.Create(path).Close();
+            if (File.ReadAllLines(path).Where(i => i == $"{login}-{password}").Count() == 0)
+                throw new Exception("Wrong login or password");
             Properties.Settings.Default.PlayerName = login;
             Properties.Settings.Default.Save();
         }

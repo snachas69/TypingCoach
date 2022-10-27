@@ -22,16 +22,7 @@ namespace TypingCoach.MVVM.ViewModel
         private void Execute_LogIn(object? obj) => new Registration(DataRecorder.ThrowAnExceptionIfAccountHasNotBeenFound).ShowDialog();
 
         public ICommand SignUpCommand { get; }
-        private void Execute_SignUp(object? obj)
-        {
-            try 
-            { new Registration(DataRecorder.WriteAccount).ShowDialog(); }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "The player has not been found",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        private void Execute_SignUp(object? obj) => new Registration(DataRecorder.WriteAccount).ShowDialog();
 
         public ICommand LogOutCommand { get; }
         private void Execute_LogOut(object? obj)
@@ -65,6 +56,8 @@ namespace TypingCoach.MVVM.ViewModel
 
         public SettingsViewModel()
         {
+            Complexity = Properties.Settings.Default.Complexity;
+
             LogInCommand = new RelayCommand(Execute_LogIn);
             SignUpCommand = new RelayCommand(Execute_SignUp);
             LogOutCommand = new RelayCommand(Execute_LogOut);

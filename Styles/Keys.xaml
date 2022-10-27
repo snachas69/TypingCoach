@@ -20,7 +20,7 @@
                                        HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="ClickMode" Value="Press" >
+                            <Trigger Property="ClickMode" Value="Press">
                                 <Trigger.EnterActions>
                                     <BeginStoryboard>
                                         <Storyboard>
